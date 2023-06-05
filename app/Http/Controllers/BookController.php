@@ -12,10 +12,13 @@ class BookController extends Controller
 {
     public function index()
     {
+        // need books to show all books
+        // all categories and users for dropdowns
         $books = Book::latest();
         $categories = Category::all();
         $users = User::all();
 
+        // modify/filter $books var only if there is a search param
         if (request('search')) {
             $books = $this->_search($books);
         }
@@ -38,11 +41,8 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        $num_users = User::all()->count();
-
         return view('book.show', [
             'book' => $book,
-            'num_users' => $num_users,
         ]);
     }
 
@@ -64,21 +64,20 @@ class BookController extends Controller
             'pdf' => 'required',
         ]);
 
-        // create final array
+        // create final array, update files to storage location
         $attributes['user_id'] = auth()->user()->id;
         $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         $attributes['pdf'] = request()->file('pdf')->store('books');
 
         Book::create($attributes);
 
-        session()->flash('success', 'Your book has been uploaded');
-        return redirect('/');
+        return redirect('/')->with('success', 'Your book has been uploaded');
     }
 
     public function download(Book $book)
     {
         // sending a get req to books/download/{id} will let users download the book
-        $file = public_path('storage/' . $book->pdf);
-        return response()->download($file);
+
+        return response()->download(public_path('storage/' . $book->pdf));
     }
 }

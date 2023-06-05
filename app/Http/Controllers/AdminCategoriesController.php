@@ -9,6 +9,7 @@ class AdminCategoriesController extends Controller
 {
     public function index()
     {
+        // show all categories for admin categories table
         $categories = Category::latest();
 
         return view('admin.category.index', ['categories' => $categories->paginate(10)]);
@@ -16,10 +17,12 @@ class AdminCategoriesController extends Controller
 
     public function store()
     {
+        // endpoint for new category form
+        // no create method, small form shown on index page
         Category::create(['name' => request('category')]);
-        session()->flash('success', 'Category created');
 
-        return redirect()->back();
+        // show the flash message and return back to index page
+        return back()->with('success', 'Category created');
     }
 
     public function edit(Category $category)
@@ -40,15 +43,13 @@ class AdminCategoriesController extends Controller
             'name' => $name
         ]);
 
-        session()->flash('success', 'Category updated');
-        return back();
+        return back()->with('success', 'Category updated');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
 
-        session()->flash('success', 'Category deleted');
-        return back();
+        return back()->with('success', 'Category deleted');
     }
 }

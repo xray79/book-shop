@@ -11,12 +11,15 @@ class SessionCommentsController extends Controller
 {
     public function index()
     {
+        // get all comments for the current user
+
         $comments = Comment::where('user_id', Auth::user()->id)->get();
         return view('session.comments.index', ['comments' => $comments]);
     }
 
     public function edit(Comment $comment)
     {
+        // view to update one comment
         return view('session.comments.edit', [
             'comment' => $comment,
         ]);
@@ -24,6 +27,7 @@ class SessionCommentsController extends Controller
 
     public function update(Comment $comment)
     {
+        // endpoint for comment update form
         $attributes = request()->validate([
             'comment' => 'required',
         ]);

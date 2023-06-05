@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
+
 class Helpers
 {
     public static function getId()
@@ -15,17 +17,28 @@ class Helpers
 
     public static function sanitizeName($name)
     {
-        // turns text to all lower case
-        // replaces spaces with - (kebab case)
+        // turns text to all lower case and
+        // replaces spaces ' ' with dashes '-' (kebab case)
 
         return str_replace(' ', '-', strtolower($name));
     }
 
-    public static function mapId($user_id, $num_users)
+    public static function mapId($userId)
     {
-        // takes the current user id and maps to a range between 0-70
+        // takes and arbitrary user id and maps to a range between 1-70
         // pravatar only has 70 images, must map all users to one of 70 images
 
-        return floor($user_id / $num_users * 70);
+        $numUsers = User::all()->count();
+        return floor($userId / $numUsers * 70);
+    }
+
+    public static function renameAttribute(string $oldName, string $newName, array $attributes): array
+    {
+        // take old name, change to new name, on array $attributes
+
+        $attributes[$newName] = $attributes[$oldName];
+        unset($attributes[$oldName]);
+
+        return $attributes;
     }
 }

@@ -24,15 +24,6 @@ use App\Http\Controllers\TestController;
 |
 */
 
-// 7 restful actions
-//      index - show all
-//      show - show 1
-//      create - create 1 resource view
-//      store - post form from create form
-//      edit -  edit 1 resource view
-//      update - post edit form
-//      delete - delete req
-
 // PUBLIC routes
 // books
 Route::get('/', [BookController::class, 'index'])->name('home');
@@ -67,23 +58,23 @@ Route::middleware('auth')->group(function () {
     Route::patch('/my-account', [SessionsController::class, 'update']);
 
     // sessions books - information on books of currently logged in user
-    Route::resource('my-account/books', SessionBooksController::class)->except(['show', 'create', 'store']);
+    Route::resource('my-account/books', SessionBooksController::class)->only(['index', 'edit', 'update', 'destroy']);
 
     // sessions comments
-    Route::resource('my-account/comments', SessionCommentsController::class)->except(['show', 'create', 'store']);
+    Route::resource('my-account/comments', SessionCommentsController::class)->only(['index', 'edit', 'update', 'destroy']);
 });
 
 
 // ADMIN routes
-Route::middleware('auth')->group(function () {
+Route::middleware('admin')->group(function () {
     // books
     Route::resource('admin/books', AdminBooksController::class)->except('show');
 
     // users
-    Route::resource('admin/users', AdminUsersController::class)->except(['show', 'create', 'store']);
+    Route::resource('admin/users', AdminUsersController::class)->only(['index', 'edit', 'update', 'destroy']);
 
     // categories
-    Route::resource('admin/categories', AdminCategoriesController::class)->except(['show', 'create']);
+    Route::resource('admin/categories', AdminCategoriesController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
 });
 
 // test route

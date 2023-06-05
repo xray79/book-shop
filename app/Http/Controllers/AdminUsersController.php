@@ -23,22 +23,15 @@ class AdminUsersController extends Controller
 
     public function update(User $user)
     {
-        $this->_updateUser($user);
-
-        session()->flash('success', 'User updated');
-        return back();
-    }
-
-    protected function _updateUser($user)
-    {
         // validate inputs and update user
         $attributes = request()->validate([
-            'name' => 'required',
+            'user-full-name' => 'required',
             'email' => 'required',
             'password' => '',
         ]);
 
-        // remove null values
+        // format for User model
+        $attributes = Helpers::renameAttribute('user-full-name', 'name', $attributes);
         $attributes = array_filter($attributes);
 
         // encrypt password
@@ -47,12 +40,13 @@ class AdminUsersController extends Controller
         }
 
         $user->update($attributes);
+
+        return back()->with('success', 'User updated');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        session()->flash('success', 'User removed');
-        return redirect()->back();
+        return back()->with('success', 'User removed');
     }
 }

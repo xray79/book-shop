@@ -11,6 +11,7 @@ class SessionBooksController extends Controller
 {
     public function index()
     {
+        // show all books for the logged in user
         $books = Book::get()->where('user_id', Auth::user()->id);
 
         return view('session.books.index', [
@@ -20,16 +21,18 @@ class SessionBooksController extends Controller
 
     public function edit(Book $book)
     {
-        $categories = Category::all();
+        // route model binding gets the relevant book
+        // all categories needed for dropdown select menu
 
         return view('session.books.edit', [
             'book' => $book,
-            'categories' => $categories,
+            'categories' => Category::all(),
         ]);
     }
 
     public function update(Book $book)
     {
+        // validation
         $attributes = request()->validate([
             'title' => 'required',
             'category_id' => 'required',
@@ -41,17 +44,18 @@ class SessionBooksController extends Controller
         // otherwise use the book->thumbnail property
         $attributes['thumbnail'] = request()->file('thumbnail')?->store('thumbnails') ?? $book->thumbnail;
         $attributes['user_id'] = Auth::user()->id;
+
+        // update book with all attributes
         $book->update($attributes);
 
-        session()->flash('success', 'Book updated');
-        return redirect()->back();
+        return redirect()->back('success', 'Book updated');
     }
 
     public function destroy(Book $book)
     {
+        // delete book and redirect with flash message
         $book->delete();
 
-        session()->flash('success', 'Book removed');
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Book removed');
     }
 }

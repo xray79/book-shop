@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function show(Category $category)
     {
-        // show all books associated with one category
+        // show one category, and all books associated with that category
 
         return view('category.show', [
             'books' => $category->book,

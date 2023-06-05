@@ -7,8 +7,9 @@
             <h1 class="text-4xl mt-8 font-bold">Admin - All Books</h1>
 
             <x-admin.books-table :books="$books" />
+            
             <div class="flex justify-end my-8 mr-32">
-                {{ $books->links()}}
+                {{ $books->links() }}
             </div>
         </main>
     </section>

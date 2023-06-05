@@ -1,5 +1,5 @@
 <x-layout>
-    <section class="bg-center bg-no-repeat bg-[url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80')] bg-gray-700 bg-blend-multiply min-h-fit">
+    <section class="bg-center bg-no-repeat bg-[url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80')] bg-gray-700 bg-blend-multiply min-h-fit h-screen bg-cover">
 
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
             <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
@@ -11,9 +11,10 @@
 
             <x-search-input />
 
+            {{-- Category dropdown --}}
             <div class="mt-10 flex mx-auto items-center justify-center gap-6">
                 <x-dropdown>
-                    <x-slot name="header">Choose a category</x-slot>
+                    <x-slot name="header">Choose a category ↓</x-slot>
                     <x-slot name="list">
                         @foreach ($categories as $category)
                             <li class="hover:bg-blue-800">
@@ -25,8 +26,9 @@
                     </x-slot>
                 </x-dropdown>
 
+                {{-- Author dropdown --}}
                 <x-dropdown>
-                    <x-slot name="header">Choose an author</x-slot>
+                    <x-slot name="header">Choose an author ↓</x-slot>
                     <x-slot name="list">
                         @foreach ($users as $user)
                             <li class="hover:bg-blue-800 my-3">

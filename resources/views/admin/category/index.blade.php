@@ -4,7 +4,10 @@
         <x-admin.nav />
         
         <main class="flex-1 text-center w-4/5 ">
-            <form action="/admin/categories" method="post" class="mt-8 flex flex-col items-center justify-center space-y-3 mx-auto">
+            <form 
+                action="/admin/categories" 
+                method="post" 
+                class="mt-8 flex flex-col items-center justify-center space-y-3 mx-auto">
                 @csrf
 
                 <h2>Add a new category</h2>
@@ -13,6 +16,7 @@
                     <x-form.text-input 
                         name="category" 
                         isLabelled="false"/>
+                        
                     <x-form.submit />
                 </div>
             </form>

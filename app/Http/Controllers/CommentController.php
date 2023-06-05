@@ -19,7 +19,6 @@ class CommentController extends Controller
 
         Comment::create($attributes);
 
-        session()->flash('success', 'Comment posted');
-        return back();
+        return back()->with('success', 'Comment posted');
     }
 }

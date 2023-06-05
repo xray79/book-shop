@@ -10,6 +10,7 @@
     <x-form.text-input name="title" />
     <x-form.text-input name="description" />
 
+    {{-- Category dropdown --}}
     <div class="py-2">
         <p class="block mb-2 text-sm font-medium text-black">Choose a category</p>
 

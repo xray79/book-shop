@@ -1,7 +1,8 @@
-@props(['comment', 'num_users'])
+@props(['comment'])
 
 @php
-    $mapped_id = floor($comment->user_id / $num_users * 70 );
+    use App\Helpers\Helpers;
+    $mapped_id = Helpers::mapId($comment->user_id);
 @endphp
 
 <article class="border-2 border-gray-200 rounded p-3 flex space-x-5 my-6">

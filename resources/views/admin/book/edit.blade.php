@@ -15,17 +15,20 @@
             @csrf
             @method('PATCH')
 
-            <div class="mb-6">
-                <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Book Title</label>
-                <input type="text" id="title" name="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{$book->title}}" required>
-            </div>
+            <x-form.text-input name="book title" :value="$book->title" class="mb-6" />
 
+            {{-- Author dropdown --}}
             <div class="mb-6">
-                <label for="author" class="block mb-2 text-sm font-medium text-gray-900 ">Author</label>
+                <label 
+                    for="author" 
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Author
+                </label>
                 
                 <x-form.category-select name='user_id'>
                     @foreach ($users as $user)
-                        <option value="{{$user->id}}"
+                        <option 
+                            value="{{$user->id}}"
                             {{$book->user->name == $user->name ? 'selected' : ''}}
                             required
                             >{{$user->name}}
@@ -34,8 +37,13 @@
                 </x-form.category-select>
             </div>
 
+            {{-- Category dropdown --}}
             <div class="mb-6">
-                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 ">Category</label>
+                <label 
+                    for="category" 
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Category
+                </label>
                 
                 <x-form.category-select name='category_id'>
                     @foreach ($categories as $category)
@@ -52,6 +60,7 @@
                 <x-form.file-input label="Book thumbnail" name="thumbnail" />
             </div>
 
+            {{-- Book description --}}
             <div class="mb-6 h-40">
                 <label 
                     for="description" 

@@ -26,13 +26,11 @@ class SessionsController extends Controller
         // auth()->attempt($attr) tries to log in user if details match, 
         // if false, show a message about wrong user credentials
         if (!auth()->attempt($attributes)) {
-            session()->flash('success', 'E-mail or password not recognised');
-            return redirect()->back();
+            return back()->with('failure', 'E-mail or password not recognised');
         }
 
         // otherwise user is logged in here
-        session()->flash('success', 'You have been logged in');
-        return redirect('/');
+        return redirect('/')->with('success', 'You have been logged in');
     }
 
 
@@ -47,22 +45,25 @@ class SessionsController extends Controller
     public function update()
     {
         // send edit form data here
-        $this->_updateUser(Auth::user());
+        if ($this->_updateUser(Auth::user())) {
+            return back()->with('success', 'User updated');
+        }
 
-        session()->flash('success', 'User updated');
-        return back();
+        return back()->with('failure', 'Could not update');
     }
 
     protected function _updateUser($user)
     {
         // validate inputs and update user
         $attributes = request()->validate([
-            'name' => 'required',
+            'user-full-name' => 'required',
             'email' => 'required',
             'password' => '',
         ]);
 
         // remove null values (password is optional)
+        $attributes['name'] = $attributes['user-full-name'];
+        unset($attributes['user-full-name']);
         $attributes = array_filter($attributes);
 
         // encrypt password
@@ -70,15 +71,13 @@ class SessionsController extends Controller
             $attributes['password'] = bcrypt($attributes['password']);
         }
 
-        $user->update($attributes);
+        return $user->update($attributes);
     }
 
     public function destroy()
     {
-        // user gets logged out here
+        // log out user, redirect to homepage with comfirmation message
         auth()->logout();
-        session()->flash('success', 'You have been logged out');
-
-        return redirect('/');
+        return redirect('/')->with('success', 'You have been logged out');
     }
 }

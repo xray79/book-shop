@@ -16,19 +16,20 @@
 </head>
 <body>
     <x-navbar.index />
-
-    {{ $slot }}
-
+        {{ $slot }}
     <x-footer />
 
-    @if (session()->has('success'))
-        <div x-data="{ show : true }"
-             x-init="setTimeout(() => show = false, 2500)"
-             x-show="show"
-             x-transition.duration.500ms
-             class="fixed top-20 right-10"
-             ><x-popup>{{ session('success') }}</x-popup>
-        </div>
-    @endif
+    <x-popup-container>            
+            @if (session()->has('success'))
+                <x-popup>
+                    {{ session('success') }}
+                </x-popup>
+            
+            @elseif (session()->has('failure'))
+                <x-failure-popup>
+                    {{ session('failure') }}
+                </x-failure-popup>
+            @endif
+    </x-popup-container>
 </body>
 </html>
