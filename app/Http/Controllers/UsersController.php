@@ -11,10 +11,17 @@ class UsersController extends Controller
     public function show(User $user)
     {
         // show any one user and all of their books
+        $books = $user->books;
+
         return view('user.show', [
-            'books' => $user->books,
-            'user' => $user
+            'books' => $books,
+            'user' => $user,
         ]);
+    }
+
+    protected function _search($books)
+    {
+        return $books->where('title', 'like', '%' . request('search') . '%')->orWhere('description', 'like', '%' . request('search') . '%');
     }
 
     public function create()
@@ -33,6 +40,7 @@ class UsersController extends Controller
             'confirm-password' => 'required|same:password|max:255',
         ]);
 
+        // format $attributes and encrypt password
         unset($attributes['confirm-password']);
         $attributes['password'] = bcrypt($attributes['password']);
 

@@ -15,7 +15,7 @@ class Authenticate extends Middleware
         if ($request->expectsJson()) {
             return null;
         } else {
-            session()->flash('success', 'Please sign in');
+            session()->flash('failure', 'Please sign in');
             return route('login');
         }
 

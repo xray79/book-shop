@@ -4,7 +4,7 @@
     action="/upload" 
     method="POST" 
     enctype="multipart/form-data"
-    class="flex flex-col space-y-4 max-w-xs md:max-w-md mx-auto mt-10">
+    class="flex flex-col space-y-4 max-w-xs md:max-w-md mx-auto my-22">
     @csrf
 
     <x-form.text-input name="title" />
@@ -16,7 +16,9 @@
 
         <x-form.category-select>
             @foreach ($categories as $category)
-                <option name="category_id" value="{{$category->id}}">{{ $category->name }}</option>    
+                <option name="category_id" value="{{$category->id}}">
+                    {{ $category->name }}
+                </option>    
             @endforeach
         </x-form.category-select>
     </div>

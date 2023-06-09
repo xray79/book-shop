@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\AuthAccountController;
 use App\Http\Controllers\AdminBooksController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\SessionBooksController;
-use App\Http\Controllers\SessionCommentsController;
+use App\Http\Controllers\AuthBooksController;
+use App\Http\Controllers\AuthCommentsController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -27,7 +27,7 @@ use App\Http\Controllers\TestController;
 // PUBLIC routes
 // books
 Route::get('/', [BookController::class, 'index'])->name('home');
-Route::get('/book/{book:id}', [BookController::class, 'show']);
+Route::get('/book/{book:id}', [BookController::class, 'show'])->middleware('auth');
 Route::get('/book/download/{book:id}', [BookController::class, 'download']);
 
 // categories
@@ -39,9 +39,9 @@ Route::get('/register', [UsersController::class, 'create']);
 Route::post('/register', [UsersController::class, 'store']);
 
 // sessions (log in and log out)
-Route::get('/log-in', [SessionsController::class, 'create'])->name('login');
-Route::post('/log-in', [SessionsController::class, 'store']);
-Route::post('/log-out', [SessionsController::class, 'destroy']);
+Route::get('/log-in', [AuthAccountController::class, 'create'])->name('login')->middleware('guest');
+Route::post('/log-in', [AuthAccountController::class, 'store'])->middleware('guest');
+Route::post('/log-out', [AuthAccountController::class, 'destroy']);
 
 
 // PROTECTED routes
@@ -54,14 +54,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/add-comment', [CommentController::class, 'store']);
 
     // sessions - information on currently logged in user
-    Route::get('/my-account', [SessionsController::class, 'edit']);
-    Route::patch('/my-account', [SessionsController::class, 'update']);
+    Route::get('/my-account', [AuthAccountController::class, 'edit']);
+    Route::patch('/my-account', [AuthAccountController::class, 'update']);
 
     // sessions books - information on books of currently logged in user
-    Route::resource('my-account/books', SessionBooksController::class)->only(['index', 'edit', 'update', 'destroy']);
+    Route::resource('my-account/books', AuthBooksController::class)->only(['index', 'edit', 'update', 'destroy']);
 
     // sessions comments
-    Route::resource('my-account/comments', SessionCommentsController::class)->only(['index', 'edit', 'update', 'destroy']);
+    Route::resource('my-account/comments', AuthCommentsController::class)->only(['index', 'edit', 'update', 'destroy']);
 });
 
 

@@ -7,7 +7,7 @@
 </label>
 
 <input 
-    class="block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400" 
+    {{ $attributes(['class' => "block w-full text-sm border rounded-lg cursor-pointer text-gray-400 focus:outline-none bg-gray-700 border-gray-600 placeholder-gray-400"]) }}
     id="{{ $name }}" 
     name="{{ strtolower($name) }}"
     type="file" 

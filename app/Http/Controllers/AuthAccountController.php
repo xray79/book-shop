@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
-class SessionsController extends Controller
+class AuthAccountController extends Controller
 {
     public function create()
     {
@@ -16,11 +18,10 @@ class SessionsController extends Controller
     public function store()
     {
         // log-in form POST req handled here
-
         // validate
         $attributes = request()->validate([
             'email' => 'required|email',
-            'password' => 'required|min:3',
+            'password' => 'required',
         ]);
 
         // auth()->attempt($attr) tries to log in user if details match, 
@@ -30,7 +31,7 @@ class SessionsController extends Controller
         }
 
         // otherwise user is logged in here
-        return redirect('/')->with('success', 'You have been logged in');
+        return redirect()->intended()->with('success', 'You have been logged in');
     }
 
 
@@ -45,11 +46,8 @@ class SessionsController extends Controller
     public function update()
     {
         // send edit form data here
-        if ($this->_updateUser(Auth::user())) {
-            return back()->with('success', 'User updated');
-        }
-
-        return back()->with('failure', 'Could not update');
+        $this->_updateUser(Auth::user());
+        return back()->with('success', 'User updated');
     }
 
     protected function _updateUser($user)
@@ -59,11 +57,12 @@ class SessionsController extends Controller
             'user-full-name' => 'required',
             'email' => 'required',
             'password' => '',
+            'confirm-password' => 'same:password'
         ]);
 
-        // remove null values (password is optional)
-        $attributes['name'] = $attributes['user-full-name'];
-        unset($attributes['user-full-name']);
+        // reformat for User model
+        $attributes = Helpers::renameAttribute('user-full-name', 'name', $attributes);
+        unset($attributes['confirm-password']);
         $attributes = array_filter($attributes);
 
         // encrypt password
@@ -71,13 +70,13 @@ class SessionsController extends Controller
             $attributes['password'] = bcrypt($attributes['password']);
         }
 
-        return $user->update($attributes);
+        $user->update($attributes);
     }
 
     public function destroy()
     {
-        // log out user, redirect to homepage with comfirmation message
+        // log out user, redirect to homepage with message
         auth()->logout();
-        return redirect('/')->with('success', 'You have been logged out');
+        return back()->with('success', 'You have been logged out');
     }
 }

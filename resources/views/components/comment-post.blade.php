@@ -12,7 +12,8 @@
             <img class="w-10 h-10 rounded-full" src="https://i.pravatar.cc/150?img={{$mapped_id}}" alt="Profile picture">
             <div class="space-y-1 font-medium text-white">
                 <p class="block text-black text-sm">
-                    <a href="/users/{{$comment->user_id}}" class="hover:underline">{{ $comment->user->name }}</a>
+                    <a href="/users/{{$comment->user_id}}" 
+                        class="hover:underline">{{ $comment->user->name }}</a>
                 </p>
             </div>
         </div>

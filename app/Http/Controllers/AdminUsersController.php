@@ -11,14 +11,31 @@ class AdminUsersController extends Controller
 {
     public function index()
     {
+        // get all users
         $users = User::latest();
 
-        return view('admin.user.index', ['users' => $users->simplePaginate(10)]);
+        // update $users based on search query
+        if (request('search')) {
+            $users = $this->_search($users);
+        }
+
+        return view('admin.user.index', [
+            'users' => $users->simplePaginate(10)
+        ]);
+    }
+
+    protected function _search($users)
+    {
+        return $users->where('name', 'like', '%' . request('search') . '%')
+            ->orWhere('email', 'like', '%' . request('search') . '%');
     }
 
     public function edit(User $user)
     {
-        return view('admin.user.edit', ['user' => $user]);
+        // show view to edit user
+        return view('admin.user.edit', [
+            'user' => $user
+        ]);
     }
 
     public function update(User $user)
@@ -28,10 +45,13 @@ class AdminUsersController extends Controller
             'user-full-name' => 'required',
             'email' => 'required',
             'password' => '',
+            'confirm-password' => 'same:password',
         ]);
 
-        // format for User model
+        // format $attributes for User model
+        // rename attributes and delete any empty attributes
         $attributes = Helpers::renameAttribute('user-full-name', 'name', $attributes);
+        unset($attributes['confirm-password']);
         $attributes = array_filter($attributes);
 
         // encrypt password
@@ -40,7 +60,6 @@ class AdminUsersController extends Controller
         }
 
         $user->update($attributes);
-
         return back()->with('success', 'User updated');
     }
 

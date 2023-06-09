@@ -14,10 +14,10 @@
                     id
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Edit action
+                    Edit
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Delete action
+                    Delete
                 </th>
             </tr>
         </thead>
@@ -39,14 +39,12 @@
                         {{ $user->id }}
                     </td>
                     <td class="px-6 py-4">
-                        <a href="/admin/users/{{$user->id}}/edit" class="font-medium text-blue-500 hover:underline">Edit</a>
+                        <a href="/admin/users/{{$user->id}}/edit" class="font-medium text-blue-500 hover:text-blue-700 hover:underline">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
                     </td>
                     <td class="px-6 py-4">
-                        <form action="/admin/users/{{ $user->id }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="font-medium text-gray-500 hover:underline">Delete</button>
-                        </form>
+                        <x-modal.toggle action="/admin/users/{{ $user->id }}" />
                     </td>
                 </tr>
             @endforeach

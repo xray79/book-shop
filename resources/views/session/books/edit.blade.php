@@ -13,20 +13,7 @@
         @csrf
         @method('PATCH')
 
-        <x-form.text-input name="Book Title" />
-        {{-- <div class="mb-6">
-            <label 
-                for="title" 
-                class="block mb-2 text-sm font-medium text-gray-900"
-                >Book Title</label>
-            <input 
-                type="text" 
-                id="title" 
-                name="title" 
-                class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                value="{{$book->title}}" 
-                required>
-        </div> --}}
+        <x-form.text-input name="Book Title" :value="$book->title" class="mb-6" />
 
         {{-- Category dropdown --}}
         <div class="mb-6">
@@ -48,9 +35,7 @@
             </x-form.category-select>
         </div>
 
-        <div class="flex flex-col mb-8">
-            <x-form.file-input label="Book thumbnail" name="thumbnail" />
-        </div>
+        <x-form.file-input label="Book thumbnail" name="thumbnail" class="mb-8" />
 
         <div class="mb-6 h-40">
             <label 

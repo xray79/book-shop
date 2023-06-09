@@ -1,6 +1,5 @@
 <x-layout>
     <section id="admin" class="min-h-screen flex">
-        
         <x-admin.nav />
         
         <main class="flex-1 text-center w-4/5 ">
@@ -15,7 +14,7 @@
                 <div class="flex items-center justify-center space-x-2">
                     <x-form.text-input 
                         name="category" 
-                        isLabelled="false"/>
+                        :isLabelled="false"/>
                         
                     <x-form.submit />
                 </div>

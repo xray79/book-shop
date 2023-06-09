@@ -7,21 +7,25 @@
                 <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Book Shop</span>
             </a>
             <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
-                <li>
-                    <a href="/" class="mr-4 hover:underline md:mr-6 ">All books</a>
-                </li>
-                <li>
-                    <a href="/log-in" class="mr-4 hover:underline md:mr-6 ">Log in</a>
-                </li>
+                @guest
+                    <li>
+                        <a href="/log-in" class="mr-4 hover:underline md:mr-6 ">Log in</a>
+                    </li>
+                @endguest
                 <li>
                     <a href="/register" class="mr-4 hover:underline md:mr-6">Register</a>
                 </li>
                 <li>
                     <a href="/upload" class="mr-4 hover:underline md:mr-6">Upload</a>
                 </li>
+                
+                @if (!Auth::user() || Auth::user()->email != 'admin@gmail.com')
+
+                @else
                 <li>
                     <a href="/admin/books" class="mr-4 hover:underline md:mr-6">Admin</a>
                 </li>
+                @endif
             </ul>
         </div>
         <hr class="my-6 sm:mx-auto border-gray-700 lg:my-8" />

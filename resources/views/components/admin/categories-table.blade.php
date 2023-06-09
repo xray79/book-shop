@@ -14,10 +14,10 @@
                     Category ID
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Edit action
+                    Edit
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Delete action
+                    Delete
                 </th>
             </tr>
         </thead>
@@ -37,17 +37,12 @@
                         {{ $category->id }}
                     </td>
                     <td class="px-6 py-4">
-                        <a href="/admin/categories/{{$category->id}}/edit" class="font-medium text-blue-500 hover:underline">Edit</a>
+                        <a href="/admin/categories/{{$category->id}}/edit" class="font-medium text-blue-500 hover:text-blue-700">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
                     </td>
                     <td class="px-6 py-4">
-                        <form action="/admin/categories/{{$category->id}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="font-medium text-gray-500 hover:underline">
-                                Delete
-                            </button>
-                        </form>
+                        <x-modal.toggle action="/admin/categories/{{$category->id}}" />
                     </td>
                 </tr>
             @endforeach

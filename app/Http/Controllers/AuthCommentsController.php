@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helpers;
 use App\Models\Book;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SessionCommentsController extends Controller
+class AuthCommentsController extends Controller
 {
     public function index()
     {
         // get all comments for the current user
 
-        $comments = Comment::where('user_id', Auth::user()->id)->get();
-        return view('session.comments.index', ['comments' => $comments]);
+        return view('session.comments.index', [
+            'comments' => Comment::where('user_id', Auth::user()->id)->get(),
+        ]);
     }
 
     public function edit(Comment $comment)
@@ -28,14 +30,14 @@ class SessionCommentsController extends Controller
     public function update(Comment $comment)
     {
         // endpoint for comment update form
+        // validate and format form data
         $attributes = request()->validate([
             'comment' => 'required',
         ]);
+        $attributes = Helpers::renameAttribute('comment', 'text', $attributes);
 
-        $new_comment['text'] = $attributes['comment'];
-
-        $comment->update($new_comment);
-
+        // update comment and redirect with message
+        $comment->update($attributes);
         return redirect()->back()->with('success', 'Comment updated');
     }
 

@@ -12,21 +12,18 @@ class BookController extends Controller
 {
     public function index()
     {
-        // need books to show all books
-        // all categories and users for dropdowns
+        // homepage
         $books = Book::latest();
-        $categories = Category::all();
-        $users = User::all();
 
-        // modify/filter $books var only if there is a search param
+        // modify/filter $books based on search param
         if (request('search')) {
             $books = $this->_search($books);
         }
 
         return view('book.index', [
             'books' => $books->simplePaginate(10),
-            'categories' => $categories,
-            'users' => $users,
+            'categories' => Category::all(),
+            'usersJson' => json_encode(User::all()),
         ]);
     }
 
@@ -41,6 +38,7 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
+        // show one book
         return view('book.show', [
             'book' => $book,
         ]);
@@ -48,9 +46,10 @@ class BookController extends Controller
 
     public function create()
     {
-        // used for user book upload view
-        $categories = Category::latest();
-        return view('book.create', ['categories' => $categories->get()]);
+        // show view to upload new books
+        return view('book.create', [
+            'categories' => Category::all(),
+        ]);
     }
 
     public function store()
@@ -60,24 +59,25 @@ class BookController extends Controller
             'title' => 'required|min:5',
             'description' => 'required',
             'category_id' => 'required',
-            'thumbnail' => 'required|image',
-            'pdf' => 'required',
+            'thumbnail' => '',
+            'pdf' => '',
         ]);
 
-        // create final array, update files to storage location
+        // add missing attributes
+        // thumbnaiil and pdf use storage uri
         $attributes['user_id'] = auth()->user()->id;
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-        $attributes['pdf'] = request()->file('pdf')->store('books');
+
+        // testing using default files
+        $attributes['thumbnail'] = request()->file('thumbnail')?->store('thumbnails') ?? '/thumbnails/c4MegLxeF1MqS6Euk32XC5zmcx8cTysiaoGhVfik.png';
+        $attributes['pdf'] = request()->file('pdf')?->store('books') ?? '/books/TQOpuY7h5hVv1I5lGyNV3qxy9qgQWAJUSQTxnQpr.epub';
 
         Book::create($attributes);
-
         return redirect('/')->with('success', 'Your book has been uploaded');
     }
 
     public function download(Book $book)
     {
         // sending a get req to books/download/{id} will let users download the book
-
         return response()->download(public_path('storage/' . $book->pdf));
     }
 }

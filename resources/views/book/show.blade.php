@@ -1,6 +1,8 @@
 @php
     use App\Helpers\Helpers;
-    $mappedId = Helpers::mapId(Auth::user()->id);
+    if (Auth::check()) {
+        $mappedId = Helpers::mapId(Auth::user()->id);
+    }
 @endphp
 
 <x-layout>
@@ -11,7 +13,9 @@
             >Back to all books
         </a>
 
-        <h1 class="text-center text-2xl my-7">{{ $book->title }}</h1>
+        <h1 class="text-center text-2xl my-7">
+            {{ $book->title }}
+        </h1>
 
         <div class="flex justify-between items-center w-2/3 mx-auto">
             <a 
@@ -30,30 +34,12 @@
             <x-single-book-card :book="$book" />
 
             @if (Auth::check())
-                <div class="flex space-x-4">
-                    <div class="w-1/4 mt-5 mb-20 bg-gray-300 h-full rounded-xl p-4 text-center flex-col">
-                        <p>Current user</p>
-                        <div class="flex items-center justify-center my-2 space-x-2">
-                            <img 
-                                class="w-10 h-10 rounded-full" 
-                                src="https://i.pravatar.cc/150?img={{ $mappedId }}" 
-                                alt="Profile picture">
-                            <a 
-                                class="hover:underline"
-                                href="/users/{{ Auth::user()->id }}">
-                                {{ Auth::user()->name }}
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="w-3/4">
-                        <x-comment-box book_id="{{$book->id}}"/>
-                    </div>
-                </div>
-
+                <x-comment-box :book_id="$book->id"/>
             @else
                 <div class="text-center my-12 font-semibold">
-                    <a href="/log-in" class="hover:underline">Log in to post a comment</a>
+                    <a href="/log-in" class="hover:underline">
+                        Log in to post a comment
+                    </a>
                 </div>
             @endif
 

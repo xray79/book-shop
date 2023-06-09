@@ -15,7 +15,7 @@ class Helpers
         return $lastElement;
     }
 
-    public static function sanitizeName($name)
+    public static function dashedName($name)
     {
         // turns text to all lower case and
         // replaces spaces ' ' with dashes '-' (kebab case)

@@ -17,5 +17,11 @@
             <x-form.submit class="mt-6" />
         </form>
 
+        <div class="text-center">
+            <p>Already have an account? 
+                <a href="/log-in" class="text-gray-600 hover:underline">Log in here</a>
+            </p>
+        </div>
+
     </section>
 </x-layout>

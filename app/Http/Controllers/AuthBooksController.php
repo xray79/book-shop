@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helpers;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class SessionBooksController extends Controller
+class AuthBooksController extends Controller
 {
     public function index()
     {
         // show all books for the logged in user
-        $books = Book::get()->where('user_id', Auth::user()->id);
-
         return view('session.books.index', [
-            'books' => $books,
+            'books' => Book::get()->where('user_id', Auth::user()->id),
         ]);
     }
 
     public function edit(Book $book)
     {
-        // route model binding gets the relevant book
+        // edit one of the currently logged in user's books
         // all categories needed for dropdown select menu
 
         return view('session.books.edit', [
@@ -34,21 +33,24 @@ class SessionBooksController extends Controller
     {
         // validation
         $attributes = request()->validate([
-            'title' => 'required',
+            'book-title' => 'required',
             'category_id' => 'required',
             'thumbnail' => '',
             'description' => 'required',
         ]);
+
+        // change 'book-title' to 'title' to fit book model
+        $attributes = Helpers::renameAttribute('book-title', 'title', $attributes);
 
         // if the request contains a file labelled 'thumbnail', store it in thumbnails folder
         // otherwise use the book->thumbnail property
         $attributes['thumbnail'] = request()->file('thumbnail')?->store('thumbnails') ?? $book->thumbnail;
         $attributes['user_id'] = Auth::user()->id;
 
+
         // update book with all attributes
         $book->update($attributes);
-
-        return redirect()->back('success', 'Book updated');
+        return back()->with('success', 'Book updated');
     }
 
     public function destroy(Book $book)

@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function store()
     {
-        // validate and build comment model attributes
+        // validate attributes and add user id
         $attributes = request()->validate([
             'book_id' => 'required',
             'text' => 'required',
@@ -18,7 +18,6 @@ class CommentController extends Controller
         $attributes['user_id'] = auth()->user()->id;
 
         Comment::create($attributes);
-
         return back()->with('success', 'Comment posted');
     }
 }

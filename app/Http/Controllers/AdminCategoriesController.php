@@ -12,14 +12,20 @@ class AdminCategoriesController extends Controller
         // show all categories for admin categories table
         $categories = Category::latest();
 
-        return view('admin.category.index', ['categories' => $categories->paginate(10)]);
+        return view('admin.category.index', [
+            'categories' => $categories->simplePaginate(10)
+        ]);
     }
 
     public function store()
     {
         // endpoint for new category form
         // no create method, small form shown on index page
-        Category::create(['name' => request('category')]);
+        $attributes = request()->validate([
+            'category' => 'required'
+        ]);
+
+        Category::create(['name' => $attributes['category']]);
 
         // show the flash message and return back to index page
         return back()->with('success', 'Category created');
@@ -27,6 +33,7 @@ class AdminCategoriesController extends Controller
 
     public function edit(Category $category)
     {
+        // show edit page
         return view('admin.category.edit', [
             'category' => $category
         ]);
@@ -34,13 +41,13 @@ class AdminCategoriesController extends Controller
 
     public function update(Category $category)
     {
+        // endpoint for category update form
         $attributes = request()->validate([
             'category' => 'required',
         ]);
-        $name = $attributes['category'];
 
         $category->update([
-            'name' => $name
+            'name' => $attributes['category'],
         ]);
 
         return back()->with('success', 'Category updated');

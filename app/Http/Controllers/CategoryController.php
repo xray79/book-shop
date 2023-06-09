@@ -17,4 +17,13 @@ class CategoryController extends Controller
             'category' => $category
         ]);
     }
+
+    protected function _search($books)
+    {
+        // return only the books where the title is like the request, with anything on either side
+        // or where, (same for description)
+
+        return $books->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('description', 'like', '%' . request('search') . '%');
+    }
 }

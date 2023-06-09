@@ -12,5 +12,10 @@
             <x-form.submit class="mt-6" />
         </form>
 
+        <div class="text-center">
+            <p class="">Dont have an account? 
+                <a href="/register" class=" text-gray-600 hover:underline">Register here</a>
+            </p>
+        </div>
     </section>
 </x-layout>

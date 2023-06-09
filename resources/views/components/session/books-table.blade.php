@@ -17,10 +17,10 @@
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Edit action
+                    Edit
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Delete action
+                    Delete
                 </th>
             </tr>
         </thead>
@@ -48,14 +48,12 @@
                         {{ $book->description }}
                     </td>
                     <td class="px-6 py-4">
-                        <a href="/my-account/books/{{ $book->id }}/edit" class="font-medium text-blue-500 hover:underline">Edit</a>
+                        <a href="/my-account/books/{{ $book->id }}/edit" class="font-medium text-blue-500 hover:text-blue-700">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
                     </td>
                     <td class="px-6 py-4">
-                        <form action="/my-account/books/{{ $book->id }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="font-medium text-gray-500 hover:underline">Delete</button>
-                        </form>
+                        <x-modal.toggle action="/my-account/books/{{ $book->id }}" />
                     </td>
                 </tr>
             @endforeach
