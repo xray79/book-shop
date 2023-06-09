@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\AuthAccountController;
-use App\Http\Controllers\AdminBooksController;
-use App\Http\Controllers\AdminUsersController;
-use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\Auth\AuthAccountController;
+use App\Http\Controllers\Admin\AdminBooksController;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\AuthBooksController;
-use App\Http\Controllers\AuthCommentsController;
+use App\Http\Controllers\Auth\AuthBooksController;
+use App\Http\Controllers\Auth\AuthCommentsController;
 use App\Http\Controllers\TestController;
 
 /*

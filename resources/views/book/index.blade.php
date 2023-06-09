@@ -41,7 +41,7 @@
                     </x-slot>
 
                     <x-slot name="list">
-                        <div x-data="{
+                        <div x-cloak x-data="{
                             search: '',
                             users: users,
                             

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Helpers\Helpers;
 use App\Models\Category;
-use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminBooksController extends Controller
 {
@@ -52,8 +53,8 @@ class AdminBooksController extends Controller
             'category_id' => 'required',
             'title' => 'required',
             'description' => 'required',
-            'thumbnail' => '',
-            'pdf' => '',
+            'thumbnail' => 'sometimes|image',
+            'pdf' => 'sometimes|required|mimes:pdf,epub,mobi',
         ]);
 
         // file input fields should be replaced with file storage path

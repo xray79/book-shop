@@ -59,8 +59,8 @@ class BookController extends Controller
             'title' => 'required|min:5',
             'description' => 'required',
             'category_id' => 'required',
-            'thumbnail' => '',
-            'pdf' => '',
+            'thumbnail' => 'sometimes|required|image',
+            'pdf' => 'sometimes|required|mimes:pdf,epub,mobi',
         ]);
 
         // add missing attributes

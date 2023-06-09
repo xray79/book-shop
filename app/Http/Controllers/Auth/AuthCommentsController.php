@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Helpers\Helpers;
 use App\Models\Book;
 use App\Models\Comment;
+use App\Helpers\Helpers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AuthCommentsController extends Controller

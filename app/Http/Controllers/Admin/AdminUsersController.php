@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Helpers\Helpers;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Mockery\Undefined;
+use App\Helpers\Helpers;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminUsersController extends Controller
 {

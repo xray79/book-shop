@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Helpers\Helpers;
 use App\Models\Book;
+use App\Helpers\Helpers;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AuthBooksController extends Controller
@@ -35,7 +36,7 @@ class AuthBooksController extends Controller
         $attributes = request()->validate([
             'book-title' => 'required',
             'category_id' => 'required',
-            'thumbnail' => '',
+            'thumbnail' => 'sometimes|required|image',
             'description' => 'required',
         ]);
 
