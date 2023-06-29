@@ -2,7 +2,9 @@
     <h2 class="mt-5 text-2xl font-bold">Links</h2>
 
     <ul class="mt-10 space-y-3 w-2/3 mx-auto">
-       <li>
+       <li 
+       {{-- class="bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white" --}}
+       >
          <a href="/admin/books" class="hover:underline">All books</a>
       </li>
       <li>
@@ -11,11 +13,5 @@
       <li>
          <a href="/admin/categories" class="hover:underline">All categories</a>
       </li>
-      <li>
-         <a href="/admin/books/create" class="hover:underline">
-            Upload a book with admin permissions
-         </a>
-      </li>
     </ul>
 </aside>
-

@@ -1,7 +1,6 @@
 <x-layout>
-    <script>
-        const users = {!! $usersJson !!};
-    </script>
+    {{-- recieve json data from backend and present as alpine dropdown (php to js) --}}
+    <script> const users = {!! $usersJson !!}; </script>
 
     <section class="bg-center bg-no-repeat bg-[url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80')] bg-gray-700 bg-blend-multiply min-h-fit h-screen bg-cover">
 
@@ -61,7 +60,7 @@
                             <template x-for="user in filteredUsers" :key="user.id">
                                 <ul>
                                     <a 
-                                    x-bind:href="`/users/${user.id}`" 
+                                    :href="`/users/${user.id}`" 
                                     x-text="user.name"
                                     class="block my-2 hover:underline hover:bg-blue-700"></a>
                                 </ul>

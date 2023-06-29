@@ -42,7 +42,7 @@
                         </a>
                     </td>
                     <td class="px-6 py-4">
-                        <x-modal.toggle action="/admin/categories/{{$category->id}}" />
+                        <i class="fa-solid fa-trash"></i>
                     </td>
                 </tr>
             @endforeach

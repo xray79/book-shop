@@ -43,8 +43,8 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                     </td>
-                    <td class="px-6 py-4">
-                        <x-modal.toggle action="/admin/users/{{ $user->id }}" />
+                    <td class="px-6 py-4 font-medium text-gray-500 hover:text-gray-700">
+                        <i class="fa-solid fa-trash"></i>
                     </td>
                 </tr>
             @endforeach
