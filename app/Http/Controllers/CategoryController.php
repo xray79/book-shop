@@ -18,7 +18,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    protected function _search($books)
+    private function search($books)
     {
         // return only the books where the title is like the request, with anything on either side
         // or where, (same for description)

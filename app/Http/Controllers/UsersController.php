@@ -19,7 +19,7 @@ class UsersController extends Controller
         ]);
     }
 
-    protected function _search($books)
+    private function search($books)
     {
         return $books->where('title', 'like', '%' . request('search') . '%')->orWhere('description', 'like', '%' . request('search') . '%');
     }
