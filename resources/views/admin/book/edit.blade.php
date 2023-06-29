@@ -4,10 +4,16 @@
     </a>
 
     <h1 class="text-center my-8 font-bold">
-        Edit {{$book->title}}
+        Edit {{ $book->title }}
     </h1>
 
-    <form 
+    @livewire('admin-edit-book', [
+        'book' => $book,
+        'users' => $users,
+        'categories' => $categories,
+    ])
+
+    {{-- <form  
         action="/admin/books/{{$book->id}}" 
         method="POST" 
         class="max-w-lg mx-auto my-8" 
@@ -17,7 +23,7 @@
 
             <x-form.text-input name="book title" :value="$book->title" class="mb-6" />
 
-            {{-- Author dropdown --}}
+            Author dropdown
             <div class="mb-6">
                 <label for="author" class="block mb-2 text-sm font-medium text-gray-900">
                     Author
@@ -35,7 +41,7 @@
                 </x-form.category-select>
             </div>
 
-            {{-- Category dropdown --}}
+            Category dropdown
             <div class="mb-6">
                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900">
                     Category
@@ -54,7 +60,7 @@
 
             <x-form.file-input label="Book thumbnail" name="thumbnail" class="mb-8" />
 
-            {{-- Book description --}}
+            Book description
             <div class="mb-6 h-40">
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900">
                     Description
@@ -71,5 +77,6 @@
             </div>
 
             <x-form.submit />
-        </form>
+        </form> --}}
+
 </x-layout>

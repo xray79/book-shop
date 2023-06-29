@@ -1,17 +1,28 @@
-@props(['books'])
-
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg w-4/5 mx-auto mt-20">
-    <table class="w-full text-sm text-left text-gray-400">
+<div>
+    <table class="w-full text-sm  text-left text-gray-400">
         <thead class="text-xs uppercase bg-gray-700 text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Title
+                    <button 
+                        wire:click="sortBy('title')"
+                        class="uppercase"
+                        >Title <span>{{ $sortField === 'title' ? ($sortAsc ? '↓' : '↑') : ''}}</span> 
+                    </button>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Author
+                    <button 
+                    wire:click="sortBy('user_id')"
+                    class="uppercase"
+                    >Author <span>{{ $sortField === 'user_id' ? ($sortAsc ? '↓' : '↑') : ''}}</span>
+                    </button>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Category
+                    <button 
+                    wire:click="sortBy('category_id')"
+                    class="uppercase"
+                    >
+                    Category <span>{{ $sortField === 'category_id' ? ($sortAsc ? '↓' : '↑') : ''}}</span>
+                    </button>
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Description
@@ -46,16 +57,26 @@
                     <td class="px-6 py-4">
                         {{ $book->description }}
                     </td>
-                    <td class="px-6 py-4">
-                        <a href="/admin/books/{{ $book->id }}/edit" class="font-medium text-blue-500 hover:text-blue-700">                    
+                    <td class="px-6 py-4 text-center">
+                        <button 
+                            wire:click="toggleEditFormHandler({{ $book }})"
+                            class="font-medium text-blue-500 hover:text-blue-700">   
                             <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
+                        </button>
                     </td>
-                    <td class="px-6 py-4">
-                        <x-modal.toggle action="/admin/books/{{ $book->id }}" />
+                    <td class="px-6 py-4 text-center">
+                        <button
+                            wire:click="toggleDeleteFormHandler({{ $book }})"
+                            class="font-medium text-gray-500 hover:text-gray-700 hover:underline" 
+                            ><i class="fa-solid fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    
+    <div class="flex justify-end my-8 mr-5">
+        {{ $books->links() }}
+    </div>
 </div>

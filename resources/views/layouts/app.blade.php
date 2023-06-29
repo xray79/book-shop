@@ -24,7 +24,7 @@
     {{-- vite hmr --}}
     @vite('resources/js/app.js')
 
-    @livewireStyles
+    @livewireStyles()
 
     <title>Book Shop</title>
 </head>
@@ -47,6 +47,6 @@
         @endif
     </x-popup-container>
 
-    @livewireScripts
+    @livewireScripts()
 </body>
 </html>
