@@ -12,6 +12,10 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\AuthBooksController;
 use App\Http\Controllers\Auth\AuthCommentsController;
 use App\Http\Controllers\TestController;
+use App\Http\Livewire\AdminCreate;
+use App\Http\Livewire\Test3;
+
+use function Termwind\render;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +72,7 @@ Route::middleware('auth')->group(function () {
 // ADMIN routes
 Route::middleware('admin')->group(function () {
     // books
-    Route::resource('admin/books', AdminBooksController::class)->except('show');
+    Route::get('/admin/books', [AdminBooksController::class, 'index']);
 
     // users
     Route::resource('admin/users', AdminUsersController::class)->only(['index', 'edit', 'update', 'destroy']);
@@ -78,4 +82,4 @@ Route::middleware('admin')->group(function () {
 });
 
 // test route
-Route::get('test', [TestController::class, 'index']);
+Route::get('test', AdminCreate::class);
