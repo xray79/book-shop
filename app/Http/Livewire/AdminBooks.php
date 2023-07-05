@@ -39,11 +39,14 @@ class AdminBooks extends Component
         'toggleCreateForm' => 'toggleNewBookFormHandler',
         'toggleDeleteForm' => 'toggleDeleteFormHandler',
         'deleteBook' => 'deleteBookHandler',
+        'flashMessage' => 'flashMessageHandler',
+        'hideMessage' => 'hideMessageHandler',
     ];
 
-    // state functions
+    // state modification functions
     private function toggleStates(array $states): void
     {
+        // takes an array of state names and sets each value to the opposite value
         foreach ($states as $stateName)
             $this->state[$stateName] = !$this->state[$stateName];
     }
@@ -82,14 +85,24 @@ class AdminBooks extends Component
         // handles deleteBook event fired from AdminDelete,
         // cannot be handled in component b/c it causes hydration error
         $book->delete();
-
-        $this->successMessage = 'Book deleted';
+        $this->emit('flashMessage', 'Book Deleted');
     }
 
     public function toggleNewBookFormHandler(): void
     {
         // handles toggleNewBook event
         $this->toggleStates(['isTableVisible', 'isNewBookFormVisible']);
+    }
+
+    // flash message event handlers
+    public function flashMessageHandler(String $message): void
+    {
+        $this->successMessage = $message;
+    }
+
+    public function hideMessageHandler(): void
+    {
+        $this->successMessage = '';
     }
 
     // sort and render

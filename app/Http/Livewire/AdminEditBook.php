@@ -59,6 +59,7 @@ class AdminEditBook extends Component
         $this->book->update($attributes);
 
         $this->emitToggleEditFormEvent();
+        $this->emit('flashMessage', 'Edit Confirmed');
     }
 
     public function emitToggleEditFormEvent()

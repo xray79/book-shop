@@ -49,11 +49,12 @@ class AdminCreate extends Component
             'pdf' => $this->pdf,
         ];
 
-        // create new book book
+        // create new book
         Book::create($attributes);
 
         // hide form, show table
         $this->emitToggleCreateFormEvent();
+        $this->emit('flashMessage', 'New Book Uploaded');
     }
 
     public function emitToggleCreateFormEvent()
