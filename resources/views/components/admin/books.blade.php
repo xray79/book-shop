@@ -40,17 +40,17 @@
             @foreach ($books as $book) 
                 <tr class="border-b bg-gray-900 border-gray-700">
                     <th scope="row" class="px-6 py-4 font-medium whitespace-normal text-white">
-                        <a class="hover:underline" href="/book/{{$book->id}}">
+                        <a class="hover:underline" href="/book/{{ $book->id }}">
                             {{ $book->title }}
                         </a>
                     </th>
                     <td class="px-6 py-4">
-                        <a class="hover:underline" href="/users/{{$book->user_id}}">
+                        <a class="hover:underline" href="/users/{{ $book->user_id }}">
                             {{ $book->user->name }}
                         </a>
                     </td>
                     <td class="px-6 py-4">
-                        <a class="hover:underline" href="/categories/{{$book->category_id}}">
+                        <a class="hover:underline" href="/categories/{{ $book->category_id }}">
                             {{ $book->category->name }}
                         </a>
                     </td>
