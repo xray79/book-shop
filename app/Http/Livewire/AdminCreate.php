@@ -14,10 +14,8 @@ class AdminCreate extends Component
 
     public $selectedUserId;
     public $selectedCategoryId;
-
     public $title;
     public $description;
-
     public $thumbnail;
     public $pdf;
 
@@ -33,7 +31,7 @@ class AdminCreate extends Component
     // handle form submit
     public function submitHandler()
     {
-        // validate inputs
+        // real time form validation
         $this->validate();
 
         $this->thumbnail = $this->thumbnail->store('thumbnails');
